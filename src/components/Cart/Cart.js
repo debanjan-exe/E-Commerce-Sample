@@ -1,15 +1,19 @@
 import React from 'react';
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import useStyles from "./styles";
+import CartItem from "./CartItem/CartItem"
+import { Link } from "react-router-dom"
 
 const Cart = ({ cart }) => {
     const classes = useStyles();
     // const isEmpty = !cart.line_items.length;
     // const isEmpty = Object.keys(cart).length && !cart.line_items.length;
 
-    const EmptyCart = () => {
-        <Typography variant="subtitle1" >You have no items in your shopping cart, start adding some !</Typography>
-    };
+    const EmptyCart = () => (
+        <Typography variant="subtitle1" >You have no items in your shopping cart, ☹️
+            <Link to = "/" className={classes.link}> start adding some </Link>!
+        </Typography>
+    )
 
     if(!cart.total_items) return "Loading....";
 
@@ -19,19 +23,18 @@ const Cart = ({ cart }) => {
 
                 {cart.line_items.map((lineItem) => (
                     <Grid item xs={12} sm={4} key={lineItem.id}>
-                        {/* <CartItem /> */}
-                        <div>{lineItem.name}</div>
+                        <CartItem item={lineItem}/>
                     </Grid>
                 ))}
 
-                <div classname={classes.cardDetails}>
+                <div className={classes.cardDetails}>
                     <Typography variant="h4">
                         SubTotal: {cart.subtotal.formatted_with_symbol}
                     </Typography>
 
                     <div>
                         <Button 
-                        classes={classes.emptyButton} 
+                        className={classes.emptyButton} 
                         size="large" 
                         type="button" 
                         variant="contained" 
@@ -40,7 +43,7 @@ const Cart = ({ cart }) => {
                         </Button>
 
                         <Button 
-                        classes={classes.checkoutButton} 
+                        className={classes.checkoutButton} 
                         size="large" 
                         type="button" 
                         variant="contained" 
@@ -58,10 +61,9 @@ const Cart = ({ cart }) => {
     return (
         <Container>
             <div className={classes.toolbar} />
-            <Typography className={classes.title} variant= "h3">Your Shopping Cart</Typography>
+            <Typography className={classes.title} variant= "h3" gutterBottom >Your Shopping Cart</Typography>
             {/* {EmptyCart()} */}
             { cart.total_items.length === 0 ? EmptyCart() : FilledCart() }
-            
         </Container>
     )
 }
