@@ -32,7 +32,7 @@ function App() {
     fetchCart();
   }, []);
 
-  console.log(cart);
+  // console.log(cart);
   // console.log(cart.line_items.length);
 
   return (

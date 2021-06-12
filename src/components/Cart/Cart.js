@@ -8,7 +8,7 @@ const Cart = ({ cart }) => {
     // const isEmpty = Object.keys(cart).length && !cart.line_items.length;
 
     const EmptyCart = () => {
-        <Typography variant="subtitle1">You have no items in your shopping cart, start adding some !</Typography>
+        <Typography variant="subtitle1" >You have no items in your shopping cart, start adding some !</Typography>
     };
 
     if(!cart.total_items) return "Loading....";
@@ -24,7 +24,7 @@ const Cart = ({ cart }) => {
                     </Grid>
                 ))}
 
-                <div classname={classes.cartDetails}>
+                <div classname={classes.cardDetails}>
                     <Typography variant="h4">
                         SubTotal: {cart.subtotal.formatted_with_symbol}
                     </Typography>
@@ -39,7 +39,8 @@ const Cart = ({ cart }) => {
                             Empty Cart
                         </Button>
 
-                        <Button classes={classes.checkoutButton} 
+                        <Button 
+                        classes={classes.checkoutButton} 
                         size="large" 
                         type="button" 
                         variant="contained" 
@@ -58,7 +59,9 @@ const Cart = ({ cart }) => {
         <Container>
             <div className={classes.toolbar} />
             <Typography className={classes.title} variant= "h3">Your Shopping Cart</Typography>
-            { !cart.total_items.length ? EmptyCart() : FilledCart() }
+            {/* {EmptyCart()} */}
+            { cart.total_items.length === 0 ? EmptyCart() : FilledCart() }
+            
         </Container>
     )
 }
