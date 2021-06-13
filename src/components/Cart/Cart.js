@@ -4,8 +4,9 @@ import useStyles from "./styles";
 import CartItem from "./CartItem/CartItem"
 import { Link } from "react-router-dom"
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart }) => {
     const classes = useStyles();
+    
     // const isEmpty = !cart.line_items.length;
     // const isEmpty = Object.keys(cart).length && !cart.line_items.length;
 
@@ -23,7 +24,11 @@ const Cart = ({ cart }) => {
 
                 {cart.line_items.map((lineItem) => (
                     <Grid item xs={12} sm={4} key={lineItem.id}>
-                        <CartItem item={lineItem}/>
+                        <CartItem 
+                        item={lineItem}
+                        onUpdateCartQty = { handleUpdateCartQty }
+                        onRemoveFromCart = { handleRemoveFromCart }
+                        />
                     </Grid>
                 ))}
 
@@ -38,7 +43,8 @@ const Cart = ({ cart }) => {
                         size="large" 
                         type="button" 
                         variant="contained" 
-                        color="secondary">
+                        color="secondary"
+                        onClick = { handleEmptyCart }>
                             Empty Cart
                         </Button>
 
@@ -47,7 +53,9 @@ const Cart = ({ cart }) => {
                         size="large" 
                         type="button" 
                         variant="contained" 
-                        color="primary">
+                        color="primary"
+                        component = { Link }
+                        to = "/checkout">
                             Checkout
                         </Button>
                     </div>
@@ -57,13 +65,14 @@ const Cart = ({ cart }) => {
         </>
     )
 
+    // console.log(cart.total_items === 0)
 
     return (
         <Container>
             <div className={classes.toolbar} />
             <Typography className={classes.title} variant= "h3" gutterBottom >Your Shopping Cart</Typography>
             {/* {EmptyCart()} */}
-            { cart.total_items.length === 0 ? EmptyCart() : FilledCart() }
+            {cart.total_items === 0 ? EmptyCart() : FilledCart() }
         </Container>
     )
 }
